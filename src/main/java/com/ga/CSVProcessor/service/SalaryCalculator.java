@@ -10,10 +10,8 @@ import java.time.Period;
 
 @Service
 public class SalaryCalculator {
-
     public BigDecimal calculateNewSalary(Employee employee){
         double increaseRate = 0;
-
         if(isProjectPercentageBiggerThan60(employee.getProjectCompletedPercentage())){
             if(checkJoinedDateIsGreaterThan1Year(employee.getDateJoined())){
                 int year = Period.between(employee.getDateJoined(), LocalDate.now()).getYears();
@@ -31,7 +29,9 @@ public class SalaryCalculator {
                     break;
             }
         }
-        return employee.getSalary().multiply(BigDecimal.valueOf(increaseRate));
+        return employee.getSalary()
+                .multiply(BigDecimal.valueOf(increaseRate))
+                .add(employee.getSalary()).setScale(2, BigDecimal.ROUND_HALF_UP);
     }
 
     public boolean isProjectPercentageBiggerThan60(double percentage){
