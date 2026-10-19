@@ -31,7 +31,7 @@ public class SalaryCalculator {
                     break;
             }
         }
-        return BigDecimal.valueOf(increaseRate);
+        return employee.getSalary().multiply(BigDecimal.valueOf(increaseRate));
     }
 
     public boolean isProjectPercentageBiggerThan60(double percentage){
