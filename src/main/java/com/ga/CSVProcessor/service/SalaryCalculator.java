@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Period;
 
 @Service
 public class SalaryCalculator {
@@ -14,8 +15,9 @@ public class SalaryCalculator {
         double increaseRate = 0;
 
         if(isProjectPercentageBiggerThan60(employee.getProjectCompletedPercentage())){
-           if(checkJoinedDate(employee.getDateJoined())){
-               increaseRate += 0.02;
+           if(checkJoinedDateIsGreaterThan1Year(employee.getDateJoined())){
+               int year = Period.between(employee.getDateJoined(), LocalDate.now()).getYears();
+               increaseRate += 0.02 * year;
            }
            //check role here
         }else{
@@ -26,7 +28,7 @@ public class SalaryCalculator {
     public boolean isProjectPercentageBiggerThan60(double percentage){
         return (percentage >= 0.6);
     }
-    public boolean checkJoinedDate(LocalDate joinedDate){
+    public boolean checkJoinedDateIsGreaterThan1Year(LocalDate joinedDate){
         return (!LocalDate.now().isBefore(joinedDate.plusYears(1)));
     }
 }
