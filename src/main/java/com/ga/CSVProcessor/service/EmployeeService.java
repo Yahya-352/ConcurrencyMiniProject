@@ -57,7 +57,7 @@ public class EmployeeService {
                 });
             }
             executorService.shutdown();
-            executorService.awaitTermination(1 , TimeUnit.MINUTES);
+            executorService.awaitTermination(1 , TimeUnit.MINUTES); // wait for all threads to finish
             System.out.println("Raised: " + raisedCount.get() + "\nNot raised: " + notRaisedCount.get());
             System.out.println("Raised(ARRAYLIST SIZE): " + raisedEmployeesList.size());
         } catch (IOException e) {
