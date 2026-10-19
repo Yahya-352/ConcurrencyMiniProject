@@ -15,14 +15,23 @@ public class SalaryCalculator {
         double increaseRate = 0;
 
         if(isProjectPercentageBiggerThan60(employee.getProjectCompletedPercentage())){
-           if(checkJoinedDateIsGreaterThan1Year(employee.getDateJoined())){
-               int year = Period.between(employee.getDateJoined(), LocalDate.now()).getYears();
-               increaseRate += 0.02 * year;
-           }
-           //check role here
-        }else{
-            increaseRate = 0;
-        };
+            if(checkJoinedDateIsGreaterThan1Year(employee.getDateJoined())){
+                int year = Period.between(employee.getDateJoined(), LocalDate.now()).getYears();
+                increaseRate += 0.02 * year;
+            }
+            switch (employee.getRole()) {
+                case MANAGER:
+                    increaseRate += 0.02;
+                    break;
+                case DIRECTOR:
+                    increaseRate += 0.05;
+                    break;
+                case EMPLOYEE:
+                    increaseRate += 0.01;
+                    break;
+            }
+        }
+        return BigDecimal.valueOf(increaseRate);
     }
 
     public boolean isProjectPercentageBiggerThan60(double percentage){
